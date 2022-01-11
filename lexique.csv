@@ -1,0 +1,45 @@
+semaine,0
+# Thèmes
+#
+techniques,ombre,lumière,couleur,perspectives,contraste,épaisseur,profondeur,figuration,nature-morte,nature-vive,abstrait,caricature,manga,comics,belge,architecture,portrait,cubisme,art-nouveau,art-déco,pointillisme,surréalisme
+techniques_ignore
+#
+cultures,cinema,musique,science-fiction,fantasy,classique,Steam-punk,Cyber-punk,télévision,internet,meme,super-héros,industrie,hollywood,bollywood,nollywood
+cultures_ignore
+#
+espace_naturel,jungle,savane,montagne,plaine,steppe,lande,forêt,antarctique,marais,mangrove,désert,mer,océan,littoral,espace,tropiques,îles,collines
+espace_naturel_ignore
+#
+espace_humain,ville,banlieue,foyer,cuisine,bureau,café,Bar,restaurant,commerce,lit,chambre,parc d'attraction,parc
+espace_humain_ignore
+#
+temps_naturel,hiver,printemps,été,automne,aube,matin,zenith,midi,après-midi,soirée,crépuscule,nuit,nadir,marée haute,marée basse,equinoxe,solstice
+temps_naturel_ignore
+#
+climat,pluie,tempête,ouragan,typhon,orage,mousson,saison sèche,éclaircie,rayon de soleil,nuageux,caniculaire,vents,blizzard
+climat_ignore
+#
+temps_humain,fêtes,traditions,rites,carnaval,naissance,mort,récoltes,diplômes,mariage,enfance,adolescence,maturité,vieillesse,grand-âge,enterrement,jeux,repos,travaux
+temps_humain_ignore
+#
+histoire,Dinosaures,préhistoire,age de pierre/bronze,antiquité,médiéval,renaissance,moderne
+histoire_ignore
+# Mots
+#
+objets_tendus,virus,éclair,finance,travail,ténèbres,vice,tension,prise,bureau,pince,outils,machine,chronomètre,arme,nuage,monnaie,ruine,vent,pluie,dette,neige,devoir
+objets_tendus_ignore
+#
+objets_détendus,bonbon,soleil,plante,caramel,élastique,mousse,doudou,sieste,méditation,chatouille,calin,caresse,copains,copines,papouilles,turlututu,carnaval,fruit
+objets_détendus_ignore
+#
+états_tendus,depressif,angoisse,noir,tendu,gris,mort,électrique,électronique,précipité,problème,squeezé,cassé,vénère,maladie,handicap,effondré,mouillé,flotte,déséquilibré,aiguë,pointu,punk
+états_tendus_ignore
+#
+états_détendus,rigolo,chaud,doux,moelleux,mou,rond,relax,détendu,calme,zen,gentil,amoureux,balancé,au-poil,nickel,confort,apaisé,ronflant,dormant,berçant
+états_détendus_ignore
+#
+animaux_tendus,insecte,tigre,araignée,larve,loup,rapace,requin,murène,anguille,dragon,crocodile,monstre,vélociraptor,tyranosaurus rex
+animaux_rendus_ignore
+#
+animaux_détendus,otarie,escargot,chaton,giraffe,rhinoceros,pingouin,canari,chiot,chenille,papillon,panda,ourson,renard,zébu,vache,chèvre
+animaux_détendus_ignore
