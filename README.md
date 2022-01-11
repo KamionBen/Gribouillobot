@@ -1,4 +1,4 @@
-# Gribouillotbot
+# Gribouillobot
 <h3>Le bot détendu du week-end griboullis</h3>
 
 <p>Chaque semaine, ce bot choisira un thème, cycliquement dans les catégories 'Arts' -> 'Naturel' -> 'Humains' ainsi que 6 mots au hasard. Tous ces mots ne pourront plus être tirés tant la catégorie en question comportera au moins 4 mots. (C'est le plus simple que j'ai trouvé)</p>
@@ -7,7 +7,7 @@
 
 <p>Ce fichier comporte tous les mots classés par catégorie, ainsi que le numéro de la semaine en cours. Il est fait pour être modifié, mais pas tant que ça :</p>
 
-<ul><li>Le numéro de la semaine : modifiez juste le numéro, je pense que si vous mettez 'patate à la place de 'semaine', ça va tout casser</li><li>Rajouter des mots : mettez les à la fin de la fin, en mettant une virgule avant, le programme s'occupera de trier le tout par ordre alphabétique</li></ul>
+<ul><li>Le numéro de la semaine : modifiez juste le numéro, je pense que si vous mettez 'patate' à la place de 'semaine', ça va tout casser</li><li>Rajouter des mots : mettez les à la fin de la fin, en mettant une virgule avant, le programme s'occupera de trier le tout par ordre alphabétique</li></ul>
 
 <h3>interface.py</h3>
 
