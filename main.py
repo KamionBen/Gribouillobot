@@ -74,8 +74,21 @@ class Gribouillobot:
 
         return selection
 
-    def choisir_mots(self, compte=6, sauf=None, seulement=None):
+    def choisir_mots(self, compte=6, sauf=None, seulement=None, equilibre=False):
         """ Choisis N mots au hasard dans les catégories autorisées """
+        # Toutes les catégories pour l'instant
+        categories_autorisees = ['objets_tendus', 'objets_détendus', 'états_tendus',
+                                 'états_détendus', 'animaux_tendus', 'animaux_détendus']
+
+        liste_mots = []
+        while len(liste_mots) < compte:
+            categorie_choisie = choice(categories_autorisees)
+            shuffle(self.lexique[categorie_choisie])  # On mélange le paquet
+            mot_choisi = self.lexique[categorie_choisie].pop(0)  # On retire le premier mot
+            self.lexique[f"{categorie_choisie}_ignore"].append(mot_choisi)  # On le met dans la liste '_ignore'
+            liste_mots.append(mot_choisi)
+
+        return liste_mots
 
 
 if __name__ == '__main__':
@@ -85,14 +98,19 @@ if __name__ == '__main__':
 
     print("Sélection d'un thème au hasard :")
     print(f"{bot.choisir_theme().capitalize()}")
-
+    print("\nSélection de mots au hasard :")
+    liste_mots = bot.choisir_mots()
+    affichage = ""
+    first = True
+    for mot in liste_mots:
+        if first:
+            affichage += mot.capitalize()
+            first = False
+        else:
+            affichage += f", {mot}"
+    print(affichage)
     print("\nAffichage du lexique :")
     bot.afficher_lexique()  # On voit que le thème choisi apparaît bien dans la liste "_ignore"
 
-    print("\nTestons la sécurité :")
-    print(f"{bot.choisir_theme('Humains').capitalize()}")
-    print('Okay')
-    print(f"{bot.choisir_theme(0).capitalize()}")
-    print("Si ça s'écrit, la sécurité ne marche pas")
 
 

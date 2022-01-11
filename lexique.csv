@@ -39,7 +39,7 @@ objets_détendus_ignore
 états_détendus_ignore
 #
 animaux_tendus,insecte,tigre,araignée,larve,loup,rapace,requin,murène,anguille,dragon,crocodile,monstre,vélociraptor,tyranosaurus rex
-animaux_rendus_ignore
+animaux_tendus_ignore
 #
 animaux_détendus,otarie,escargot,chaton,giraffe,rhinoceros,pingouin,canari,chiot,chenille,papillon,panda,ourson,renard,zébu,vache,chèvre
 animaux_détendus_ignore
