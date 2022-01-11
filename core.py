@@ -1,7 +1,7 @@
 import csv
 from random import choice, shuffle
 
-VERSION = "0.1.2"
+VERSION = "0.1.3"
 
 
 class Gribouillobot:
@@ -47,9 +47,26 @@ class Gribouillobot:
 
     def sauvegarder_lexique(self):
         """ Fais les opérations de fin et sauvegarde le lexique """
+        # TODO : Ne fonctionne pas encore
         """ Opérations : semaine += 1, réhabiliter les mots qu'il faut, trier les listes """
         """ Penser à rajouter les '#' pour la lisibilité """
-        pass
+        self.semaine += 1
+        themes_liste = ['techniques', 'cultures', 'espace_naturel', 'espace_humain',
+                        'temps_naturel', 'temps_humain', 'climat', 'histoire']
+
+        for theme in themes_liste:
+            new_list = self.lexique[theme].copy()
+            ignore_list = self.lexique[f"{theme}_ignore"].copy()
+            if len(new_list) == 0:  # La liste est vide, on la rerempli
+                new_list = ignore_list.copy()
+                ignore_list = []
+
+            new_list.sort()
+            new_list.insert(0, theme)
+            ignore_list.insert(0, f"{theme}_ignore")
+
+            print(new_list)
+            print(ignore_list)
 
     def choisir_theme(self, categorie=None):
         """ Choisis un thème dans la catégorie donnée """
@@ -96,21 +113,24 @@ if __name__ == '__main__':
     bot = Gribouillobot('lexique.csv')  # Initialisation du bot
     print(f"-- Gribouillobot --\n - Version {VERSION} -\n\nSemaine {bot.semaine}\n")
 
-    print("Sélection d'un thème au hasard :")
-    print(f"{bot.choisir_theme().capitalize()}")
-    print("\nSélection de mots au hasard :")
+    print("Le thème du jour :")
+    print(f"• {bot.choisir_theme().upper()}")
+    print("\nMots aléatoires :")
     liste_mots = bot.choisir_mots()
-    affichage = ""
+    affichage = "• "
     first = True
     for mot in liste_mots:
         if first:
-            affichage += mot.capitalize()
+            affichage += mot.upper()
             first = False
         else:
-            affichage += f", {mot}"
+            affichage += f" / {mot.upper()}"
     print(affichage)
-    print("\nAffichage du lexique :")
-    bot.afficher_lexique()  # On voit que le thème choisi apparaît bien dans la liste "_ignore"
+    #print("\nAffichage du lexique :")
+    #bot.afficher_lexique()  # On voit que le thème choisi apparaît bien dans la liste "_ignore"
+
+    print("\nTest de la sauvegarde :")
+    bot.sauvegarder_lexique()
 
 
 
