@@ -1,7 +1,7 @@
 import csv
 from random import choice, shuffle
 
-VERSION = "0.1.3"
+VERSION = "1.0"
 
 
 class Gribouillobot:
@@ -47,26 +47,30 @@ class Gribouillobot:
 
     def sauvegarder_lexique(self):
         """ Fais les opérations de fin et sauvegarde le lexique """
-        # TODO : Ne fonctionne pas encore
-        """ Opérations : semaine += 1, réhabiliter les mots qu'il faut, trier les listes """
-        """ Penser à rajouter les '#' pour la lisibilité """
+
         self.semaine += 1
+        self.rehabiliter_mots()  # Réhabilitation par défaut
         themes_liste = ['techniques', 'cultures', 'espace_naturel', 'espace_humain',
                         'temps_naturel', 'temps_humain', 'climat', 'histoire']
+        mots_liste = ['objets_tendus', 'objets_détendus', 'états_tendus',
+                      'états_détendus', 'animaux_tendus', 'animaux_détendus']
+        with open(self.fichier, 'w', newline='') as fichier:
+            writer = csv.writer(fichier, delimiter=',',
+                                quotechar='|', quoting=csv.QUOTE_MINIMAL)
 
-        for theme in themes_liste:
-            new_list = self.lexique[theme].copy()
-            ignore_list = self.lexique[f"{theme}_ignore"].copy()
-            if len(new_list) == 0:  # La liste est vide, on la rerempli
-                new_list = ignore_list.copy()
-                ignore_list = []
+            writer.writerows([['semaine', self.semaine], ['#THEMES']])
+            for theme in themes_liste:
+                writer.writerow(['#'])  # Pour la visibilité
+                new_liste = [theme] + self.lexique[theme]
+                ignore_liste = [f"{theme}_ignore"] + self.lexique[f"{theme}_ignore"]
+                writer.writerows([new_liste, ignore_liste])
 
-            new_list.sort()
-            new_list.insert(0, theme)
-            ignore_list.insert(0, f"{theme}_ignore")
-
-            print(new_list)
-            print(ignore_list)
+            writer.writerow(['#MOTS'])
+            for mot in mots_liste:
+                writer.writerow(['#'])  # Pour la visibilité
+                new_liste = [mot] + self.lexique[mot]
+                ignore_liste = [f"{mot}_ignore"] + self.lexique[f"{mot}_ignore"]
+                writer.writerows([new_liste, ignore_liste])
 
     def choisir_theme(self, categorie=None):
         """ Choisis un thème dans la catégorie donnée """
@@ -88,6 +92,7 @@ class Gribouillobot:
         shuffle(self.lexique[choix])  # On mélange le paquet de mots
         selection = self.lexique[choix].pop(0)  # On retire le premier
         self.lexique[f"{choix}_ignore"].append(selection)  # On ajoute le mot à la liste des mots ignorés
+        self.lexique[choix].sort()  # On refait le tri
 
         return selection
 
@@ -104,33 +109,38 @@ class Gribouillobot:
             mot_choisi = self.lexique[categorie_choisie].pop(0)  # On retire le premier mot
             self.lexique[f"{categorie_choisie}_ignore"].append(mot_choisi)  # On le met dans la liste '_ignore'
             liste_mots.append(mot_choisi)
+            self.lexique[categorie_choisie].sort()  # On refait le tri
 
         return liste_mots
 
-
-if __name__ == '__main__':
-    """ Cette partie de code se trouverait plutôt dans un fichier interface.py """
-    bot = Gribouillobot('lexique.csv')  # Initialisation du bot
-    print(f"-- Gribouillobot --\n - Version {VERSION} -\n\nSemaine {bot.semaine}\n")
-
-    print("Le thème du jour :")
-    print(f"• {bot.choisir_theme().upper()}")
-    print("\nMots aléatoires :")
-    liste_mots = bot.choisir_mots()
-    affichage = "• "
-    first = True
-    for mot in liste_mots:
-        if first:
-            affichage += mot.upper()
-            first = False
+    def rehabiliter_mots(self, categorie=None, seuil=3):
+        """ Par défaut, parcourt les listes de mots et s'il y a 3 mots ou moins, rajoute les mots ignorés """
+        """ En indiquant une categorie, seule celle-là sera réhabilitée """
+        """ En modifiant le seuil à 0, tous les mots ignorés seront rajoutés """
+        """ Cette fonction est appelée avant la sauvegarde, le processus est donc automatique"""
+        if seuil < 0:
+            raise ValueError(f"La valeur seuil ne doit pas être inférieure à zéro")
+        elif categorie is None:
+            for index in ['techniques', 'cultures', 'espace_naturel', 'espace_humain', 'temps_naturel', 'temps_humain',
+                          'climat', 'histoire','objets_tendus', 'objets_détendus', 'états_tendus', 'états_détendus',
+                          'animaux_tendus', 'animaux_détendus']:
+                if seuil == 0 or len(self.lexique[index]) <= 3:
+                    """ Réhabilitation """
+                    self.lexique[index] += self.lexique[f"{index}_ignore"]  # On fusionne les listes
+                    self.lexique[index].sort()  # On trie la liste principale
+                    self.lexique[f"{index}_ignore"] = []  # On vide la liste _ignore
         else:
-            affichage += f" / {mot.upper()}"
-    print(affichage)
-    #print("\nAffichage du lexique :")
-    #bot.afficher_lexique()  # On voit que le thème choisi apparaît bien dans la liste "_ignore"
+            """ Réhabilitation spécifique """
+            # Renverra une erreur si la catégorie est mal orthographiée, attention
+            self.lexique[categorie] += self.lexique[f"{categorie}_ignore"]  # On fusionne les listes
+            self.lexique[categorie].sort()  # On trie la liste principale
+            self.lexique[f"{categorie}_ignore"] = []  # On vide la liste _ignore
 
-    print("\nTest de la sauvegarde :")
-    bot.sauvegarder_lexique()
+    def reinitialiser_csv(self):
+        self.rehabiliter_mots(seuil=0)
+        self.sauvegarder_lexique()
+
+
 
 
 
