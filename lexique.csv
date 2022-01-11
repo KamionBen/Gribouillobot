@@ -1,5 +1,5 @@
 semaine,0
-# Thèmes
+#Thèmes
 #
 techniques,ombre,lumière,couleur,perspectives,contraste,épaisseur,profondeur,figuration,nature-morte,nature-vive,abstrait,caricature,manga,comics,belge,architecture,portrait,cubisme,art-nouveau,art-déco,pointillisme,surréalisme
 techniques_ignore
@@ -24,7 +24,7 @@ temps_humain_ignore
 #
 histoire,Dinosaures,préhistoire,age de pierre/bronze,antiquité,médiéval,renaissance,moderne
 histoire_ignore
-# Mots
+#Mots
 #
 objets_tendus,virus,éclair,finance,travail,ténèbres,vice,tension,prise,bureau,pince,outils,machine,chronomètre,arme,nuage,monnaie,ruine,vent,pluie,dette,neige,devoir
 objets_tendus_ignore
