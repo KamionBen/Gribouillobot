@@ -9,7 +9,7 @@ if __name__ == '__main__':
     print(f"• {bot.choisir_theme().upper()}")
 
     print("\nMots aléatoires :")
-    liste_mots = bot.choisir_mots()
+    liste_mots = bot.choisir_mots(tendu=0)
     print(f"• {' / '.join(liste_mots).upper()}")
 
     bot.sauvegarder_lexique()

@@ -1,7 +1,7 @@
 import csv
 from random import choice, shuffle
 
-VERSION = "1.0"
+VERSION = "1.1"
 
 
 class Gribouillobot:
@@ -96,20 +96,36 @@ class Gribouillobot:
 
         return selection
 
-    def choisir_mots(self, compte=6, sauf=None, seulement=None, equilibre=False):
+    def choisir_mots(self, compte=6, tendu=3):
         """ Choisis N mots au hasard dans les catégories autorisées """
+        """ Le paramètre 'tendu' permet de décider le nombre de mots tendus """
         # Toutes les catégories pour l'instant
         categories_autorisees = ['objets_tendus', 'objets_détendus', 'états_tendus',
                                  'états_détendus', 'animaux_tendus', 'animaux_détendus']
+        mots_tendus = ['objets_tendus', 'états_tendus', 'animaux_tendus']
+        mots_detendus = ['objets_détendus', 'états_détendus', 'animaux_détendus']
 
         liste_mots = []
-        while len(liste_mots) < compte:
-            categorie_choisie = choice(categories_autorisees)
+        for _ in range(tendu):
+            # D'abord les mots tendus
+            categorie_choisie = choice(mots_tendus)
             shuffle(self.lexique[categorie_choisie])  # On mélange le paquet
             mot_choisi = self.lexique[categorie_choisie].pop(0)  # On retire le premier mot
             self.lexique[f"{categorie_choisie}_ignore"].append(mot_choisi)  # On le met dans la liste '_ignore'
             liste_mots.append(mot_choisi)
             self.lexique[categorie_choisie].sort()  # On refait le tri
+
+        for _ in range(compte - tendu):
+            # Ensuite les mots détendus
+            categorie_choisie = choice(mots_detendus)
+            shuffle(self.lexique[categorie_choisie])  # On mélange le paquet
+            mot_choisi = self.lexique[categorie_choisie].pop(0)  # On retire le premier mot
+            self.lexique[f"{categorie_choisie}_ignore"].append(mot_choisi)  # On le met dans la liste '_ignore'
+            liste_mots.append(mot_choisi)
+            self.lexique[categorie_choisie].sort()  # On refait le tri
+            # Ça fait doublon de code, c'est un peu dommage ...
+
+        shuffle(liste_mots)
 
         return liste_mots
 

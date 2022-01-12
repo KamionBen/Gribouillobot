@@ -12,7 +12,7 @@
 <h3>interface.py</h3>
 
 <p>Pour l'instant un simple exemple qui prouve que ça marche ! Et pour montrer les fonctions aussi :</p>
-<ul><li>choisir_theme()</li><li>choisir_mots()</li><li>sauvegarder_lexique()</li><li>reinitialiser_csv()</li></ul>
+<ul><li>choisir_theme()</li><li>choisir_mots()</li><li>sauvegarder_lexique()</li><li>reinitialiser_csv()</li><li>afficher_lexique()</li></ul>
 
 <h3>core.py</h3>
 
