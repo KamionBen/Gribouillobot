@@ -1,13 +1,13 @@
 import csv
-from random import choice, shuffle
+from random import choice, shuffle, sample
 
-VERSION = "1.1"
+VERSION = "1.2"
 
 
-class Gribouillobot:
+class GribouillobotTirage:
     def __init__(self, fichier):
-        """ Charge le fichier donné et classe les mots dans un dict selon les catégories """
-        """ Chaque catégorie a une liste "_ignore" associée pour stocker les mots utilisés récemment """
+        """ Charge le fichier donné et classe les mots dans un dict selon les catégories
+        Chaque catégorie a une liste "_ignore" associée pour stocker les mots utilisés récemment """
         """ Thèmes """
         # Tous : techniques, cultures, espace_naturel, espace_humain, temps_naturel, temps_humain, climat, histoire
         # Thèmes art : techniques, cultures
@@ -25,7 +25,10 @@ class Gribouillobot:
         self.semaine, self.lexique = self.importer_lexique()  # Par commodité, la variable semaine est stockée avec le lexique
 
     def importer_lexique(self):
-        """ Charge le fichier .csv et renvoie un dictionnaire"""
+        """ Charge le fichier .csv et renvoie un dictionnaire
+        Chaque ligne commençant par '#' est ignorée à l'importation
+        Ces lignes sont là pour que le fichier soit plus lisible
+        Les autres lignes sont des listes dont le premier mot est le nom du reste de la liste"""
         with open(self.fichier, newline='') as csvfile:
             reader = csv.reader(csvfile)
             semaine = None
@@ -73,8 +76,8 @@ class Gribouillobot:
                 writer.writerows([new_liste, ignore_liste])
 
     def choisir_theme(self, categorie=None):
-        """ Choisis un thème dans la catégorie donnée """
-        """ Si aucune catégorie n'est donnée, continue le cycle Arts -> Naturel -> Humains """
+        """ Choisis un thème dans la catégorie donnée
+        Si aucune catégorie n'est donnée, continue le cycle Arts -> Naturel -> Humains """
         cycle = ['Arts', 'Naturel', 'Humains']
         if categorie is None:
             categorie = cycle[self.semaine % len(cycle)]
@@ -97,8 +100,8 @@ class Gribouillobot:
         return selection
 
     def choisir_mots(self, compte=6, tendu=3):
-        """ Choisis N mots au hasard dans les catégories autorisées """
-        """ Le paramètre 'tendu' permet de décider le nombre de mots tendus """
+        """ Choisis N mots au hasard dans les catégories autorisées
+        Le paramètre 'tendu' permet de décider le nombre de mots tendus """
         # Toutes les catégories pour l'instant
         categories_autorisees = ['objets_tendus', 'objets_détendus', 'états_tendus',
                                  'états_détendus', 'animaux_tendus', 'animaux_détendus']
@@ -130,12 +133,12 @@ class Gribouillobot:
         return liste_mots
 
     def rehabiliter_mots(self, categorie=None, seuil=3):
-        """ Par défaut, parcourt les listes de mots et s'il y a 3 mots ou moins, rajoute les mots ignorés """
-        """ En indiquant une categorie, seule celle-là sera réhabilitée """
-        """ En modifiant le seuil à 0, tous les mots ignorés seront rajoutés """
-        """ Cette fonction est appelée avant la sauvegarde, le processus est donc automatique"""
+        """ Par défaut, parcourt les listes de mots et s'il y a 3 mots ou moins, rajoute les mots ignorés
+        En indiquant une categorie, seule celle-là sera réhabilitée
+        En modifiant le seuil à 0, tous les mots ignorés seront rajoutés
+        Cette fonction est appelée avant la sauvegarde, le processus est donc automatique"""
         if seuil < 0:
-            raise ValueError(f"La valeur seuil ne doit pas être inférieure à zéro")
+            raise ValueError(f"La valeur seuil donnée ({seuil}) ne doit pas être inférieure à zéro")
         elif categorie is None:
             for index in ['techniques', 'cultures', 'espace_naturel', 'espace_humain', 'temps_naturel', 'temps_humain',
                           'climat', 'histoire','objets_tendus', 'objets_détendus', 'états_tendus', 'états_détendus',

@@ -2,7 +2,7 @@ from core import *
 
 if __name__ == '__main__':
 
-    bot = Gribouillobot('lexique.csv')  # Initialisation du bot
+    bot = GribouillobotTirage('lexique.csv')  # Initialisation du bot
     print(f"-- Gribouillobot --\n - Version {VERSION} -\n\nSemaine {bot.semaine}\n")
 
     print("Le thème du jour :")
